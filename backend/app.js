@@ -1,16 +1,17 @@
 const express = require('express');
+require('dotenv').config(); // Load env variables
+const app = express();
+const userRouter = require('./router/router'); // Import the router
+const connectDB = require('./conn/conn'); // Import the connection
 
-const app=express();
+PORT = process.env.PORT || 3000; // Set the port
 
 
-app.get('/',(req,res)=>{
-    res.send("Hello World")
-}
-)
+app.use(express.json()); // Middleware to parse JSON requests
+app.use('/api', userRouter); // Use the router for all routes starting with /api
+connectDB(); // Connect to MongoDB
 
-//creating port
-
-app.listen(3000,()=>{
-    console.log("server is running on port 3000")
-}
-)
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+})
