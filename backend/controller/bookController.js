@@ -20,4 +20,16 @@ const createBook = async (req, res) => {
     }
 };
 
-module.exports = { createBook };
+
+const getBook =async(req, resp)=>{
+    try{
+        const books=await Book.find();
+        if(!books){
+            return resp.status(404).json({message:"No books found"})
+        }
+    }catch(err){
+        return resp.status(500).json({message:"Error in fetching books",error:err.message})
+    }
+}
+
+module.exports = { createBook , getBook};
