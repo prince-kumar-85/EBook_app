@@ -21,15 +21,17 @@ const createBook = async (req, res) => {
 };
 
 
-const getBook =async(req, resp)=>{
-    try{
-        const books=await Book.find();
-        if(!books){
-            return resp.status(404).json({message:"No books found"})
+const getBook = async (req, resp) => {
+    try {
+        const books = await Book.find();
+        if (!books || books.length === 0) {
+            return resp.status(404).json({ message: "No books found" });
         }
-    }catch(err){
-        return resp.status(500).json({message:"Error in fetching books",error:err.message})
+        return resp.status(200).json({ books }); // ✅ Send response here
+    } catch (err) {
+        return resp.status(500).json({ message: "Error in fetching books", error: err.message });
     }
-}
+};
+
 
 module.exports = { createBook , getBook};
