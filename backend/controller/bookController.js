@@ -34,4 +34,45 @@ const getBook = async (req, resp) => {
 };
 
 
-module.exports = { createBook , getBook};
+const getBookById = async (req, resp) => {
+    const bookId = req.params.id;
+    try {
+        const book = await  Book.findById(bookId);
+        if (!book) {
+            return resp.status(404).json({ message: "Book not found" });
+        }
+        return resp.status(200).json({ book });
+    } catch (err) {     
+        return resp.status(500).json({ message: "Error in fetching book", error: err.message });
+    }
+} 
+
+const deleteBook = async (req, resp) => {   
+    const bookId=req.params.id;
+    try{
+        const book =await Book.findByIdAndDelete(bookId);
+        if(!book){
+            return resp.status(404).json({message:"Book not found"});
+        }           
+        return resp.status(200).json({message:"Book deleted successfully"});
+    }catch(err){
+        return resp.status(500).json({message:"Error in deleting book",error:err.message});
+    }
+
+}
+
+const updateBook = async (req, resp)=>{
+    const bookId=req.params.id;
+    try{
+        const book =await  Book.findByIdAndUpdate(bookId,req.body,{new:true});
+        if(!book){
+            return resp.status(404).json({message:"Book not found"});
+        }   
+        return resp.status(200).json({message:"Book updated successfully",book});
+    }
+    catch(err){
+        return resp.status(500).json({message:"Error in updating book",error:err.message});
+    }   
+}
+
+module.exports = { createBook , getBook , getBookById, deleteBook, updateBook};
