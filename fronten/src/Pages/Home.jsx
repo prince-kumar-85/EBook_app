@@ -11,7 +11,7 @@ function Home() {
         try {
           const res = await axios.get("http://localhost:5000/api/getbook");
           setData(res.data.books);
-          console.log(res.data.books);
+          console.log(res.data.books); 
         } catch (err) {
           console.error(err);
         }
@@ -19,6 +19,8 @@ function Home() {
     
       fetchBooks();
     }, []);
+
+    
     
 
   return (
