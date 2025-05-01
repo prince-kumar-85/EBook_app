@@ -34,6 +34,7 @@ function Home() {
     <li key={book._id} style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem" }}>
       <h3>{book.title}</h3>
       <p><strong>Author:</strong> {book.author}</p>
+      <img src={`http://localhost:5000/upload/images/${book.coverImage}`} alt={"Error photo is not upload"} style={{ width: "100px", height: "auto" }} />
       <p><strong>Description:</strong> {book.description}</p>
       <p><strong>Language:</strong> {book.language}</p>
       <p><strong>Price:</strong> ₹{book.price}</p>
@@ -44,6 +45,7 @@ function Home() {
 
       <Link to="/allBook">All Recipe</Link>  
       <Link to="/additem">Add Item</Link>    
+      <Link to="/FormInput">Form Input</Link>
     </div>
   );
 }

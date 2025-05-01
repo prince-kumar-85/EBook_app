@@ -8,6 +8,7 @@ function FormInput() {
     const [description, setDescription] = useState("");
     const [language, setLanguage] = useState("");
     const [price, setPrice] = useState("");
+    const [file, setFile] = useState(null); // Cover image
     const [rating, setRating] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -18,29 +19,29 @@ function FormInput() {
         e.preventDefault();
         setError("");
         setSuccess("");
-
+    
         if (!title || !author || !description || !language || !price || !rating) {
             setError("All fields are required.");
             return;
         }
-
-        const bookData = {
-            title,
-            author,
-            description,
-            language,
-            price: parseFloat(price),
-            rating: parseFloat(rating),
-        };
-
+    
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("author", author);
+        formData.append("description", description);
+        formData.append("language", language);
+        formData.append("price", price);
+        formData.append("rating", rating);
+        if (file) formData.append("coverImage", file);
+    
         try {
-            const res = await axios.post("http://localhost:5000/api/createbook", bookData, {
+            const res = await axios.post("http://localhost:5000/api/createbook", formData, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "multipart/form-data",
                 },
             });
-
-            if (res.status === 200 || res.status === 201) {
+    
+            if (res.status === 201) {
                 setSuccess("Book created successfully!");
                 setTimeout(() => {
                     navigate("/allBook");
@@ -50,8 +51,10 @@ function FormInput() {
             }
         } catch (err) {
             setError(err.response?.data?.message || "Submission failed.");
+            console.error("Create Book Error:", err.response?.data || err.message);
         }
     };
+    
 
     const handleReset = () => {
         setTitle("");
@@ -59,6 +62,7 @@ function FormInput() {
         setDescription("");
         setLanguage("");
         setPrice("");
+        setFile(null);
         setRating("");
         setError("");
         setSuccess("");
@@ -68,8 +72,8 @@ function FormInput() {
         <>
             <h1>Form Input</h1>
 
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {success && <p style={{ color: "green" }}>{success}</p>}
 
             <form onSubmit={handleSubmit} onReset={handleReset}>
                 <div>
@@ -130,6 +134,15 @@ function FormInput() {
                         value={rating}
                         onChange={(e) => setRating(e.target.value)}
                         required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="coverImage">Cover Image</label>
+                    <input
+                        type="file"
+                        id="coverImage"
+                        accept="image/*"
+                        onChange={(e) => setFile(e.target.files[0])}
                     />
                 </div>
                 <button type="submit">Submit</button>

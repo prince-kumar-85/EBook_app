@@ -1,16 +1,27 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config(); // Load env variables
+
 const app = express();
 const userRouter = require('./router/router'); // Import the router
-const connectDB = require('./conn/conn'); // Import the connection
+const connectDB = require('./conn/conn'); // Import the DB connection
 
-PORT = process.env.PORT || 5000; // Set the port
+const PORT = process.env.PORT || 5000;
 
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json()); // Middleware to parse JSON requests
-app.use('/api', userRouter); // Use the router for all routes starting with /api
-connectDB(); // Connect to MongoDB
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ Serve static files from /upload/images (for cover image access)
+app.use('/upload/images', express.static(path.join(__dirname, 'upload/images')));
+
+// Routes
+app.use('/api', userRouter);
+
+// DB connection
+connectDB();
 
 // Start server
 app.listen(PORT, () => {

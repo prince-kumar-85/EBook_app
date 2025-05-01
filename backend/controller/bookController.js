@@ -1,31 +1,49 @@
 const Book = require("../model/book");
+const multer = require('multer') // Import multer for file upload handling
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const uploadPath = './upload/images';
+        cb(null, uploadPath);  // Ensure this is the correct folder path
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage }).single('coverImage');
+
+
 
 // Create a new book
 const createBook = async (req, res) => {
     try {
-        const { title, author, description, language, coverImage, price, rating } = req.body;
+        console.log("📥 Incoming Request Body:", req.body);
+        console.log("📷 Uploaded File:", req.file);
 
-        // Create a new book instance
+        const { title, author, description, language, price, rating } = req.body;
+        const coverImage = req.file ? req.file.filename : null;
+
         const book = new Book({
             title,
             author,
             description,
             language,
-            coverImage,  // Optional field
-            price,
-            rating
+            coverImage,
+            price: parseFloat(price),
+            rating: parseFloat(rating),
         });
 
-        // Save the book to the database
         await book.save();
 
-        // Send success response
         res.status(201).json({ message: "Book created successfully", book });
     } catch (err) {
-        // Send error response
+        console.error("🔥 Error saving book:", err.message);
         res.status(500).json({ message: "Book creation failed", error: err.message });
     }
 };
+
+
 
 // Get all books
 const getBook = async (req, resp) => {
@@ -82,4 +100,4 @@ const updateBook = async (req, resp) => {
     }
 };
 
-module.exports = { createBook, getBook, getBookById, deleteBook, updateBook };
+module.exports = { createBook, getBook, getBookById, deleteBook, updateBook , upload};
