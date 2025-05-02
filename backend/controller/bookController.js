@@ -21,13 +21,14 @@ const createBook = async (req, res) => {
         console.log("📥 Incoming Request Body:", req.body);
         console.log("📷 Uploaded File:", req.file);
 
-        const { title, author, description, language, price, rating } = req.body;
+        const { title, author, description,category, language, price, rating } = req.body;
         const coverImage = req.file ? req.file.filename : null;
 
         const book = new Book({
             title,
             author,
             description,
+            category,
             language,
             coverImage,
             price: parseFloat(price),

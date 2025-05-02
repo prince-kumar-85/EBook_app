@@ -8,6 +8,7 @@ function FormInput() {
     const [description, setDescription] = useState("");
     const [language, setLanguage] = useState("");
     const [price, setPrice] = useState("");
+    const [category, setCategory] = useState("");
     const [file, setFile] = useState(null); // Cover image
     const [rating, setRating] = useState("");
     const [error, setError] = useState("");
@@ -20,7 +21,7 @@ function FormInput() {
         setError("");
         setSuccess("");
     
-        if (!title || !author || !description || !language || !price || !rating) {
+        if (!title || !author || !description || !category || !language || !price || !rating) {
             setError("All fields are required.");
             return;
         }
@@ -30,6 +31,7 @@ function FormInput() {
         formData.append("author", author);
         formData.append("description", description);
         formData.append("language", language);
+        formData.append("category", category);
         formData.append("price", price);
         formData.append("rating", rating);
         if (file) formData.append("coverImage", file);
@@ -63,6 +65,7 @@ function FormInput() {
         setLanguage("");
         setPrice("");
         setFile(null);
+        setCategory("");
         setRating("");
         setError("");
         setSuccess("");
@@ -93,6 +96,16 @@ function FormInput() {
                         id="author"
                         value={author}
                         onChange={(e) => setAuthor(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="category">Category</label>
+                    <input
+                        type="text"
+                        id="category"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                         required
                     />
                 </div>

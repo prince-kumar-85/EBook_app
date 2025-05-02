@@ -1,0 +1,82 @@
+/* Home.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e2f;
+    color: white;
+    padding: 1rem 2rem;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .nav-links li {
+    cursor: pointer;
+  }
+  
+  .navbar-right .btn {
+    margin-left: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #4caf50;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .layout-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 200px;
+    padding: 1rem;
+    background-color: #f4f4f4;
+    height: calc(100vh - 70px); /* adjust based on navbar height */
+    position: sticky;
+    top: 70px;
+  }
+  
+  .main-content {
+    padding: 2rem;
+    flex-grow: 1;
+  }
+  
+  .book-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .book-item {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .book-image {
+    width: 100px;
+    height: auto;
+  }
+  
+  .links a {
+    margin-right: 1rem;
+    text-decoration: none;
+    color: #1e1e2f;
+    font-weight: bold;
+  }
+  .sidebar ul li {
+    padding: 8px 0;
+    cursor: pointer;
+    /* transition: background 0.3s; */
+  }
+  
+  .sidebar ul li:hover {
+    background-color: #ddd;
+    border-radius: 4px;
+  }
+  
+  
