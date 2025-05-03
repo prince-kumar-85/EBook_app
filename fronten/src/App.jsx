@@ -2,10 +2,25 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import AllBook from './Pages/AllBook';
+import { useState,useEffect } from 'react'; 
 import FormInput from './Pages/FormInput';
 import { Link } from 'react-router-dom';
 
 function App() {
+  const [isDarkMode, setDarkMode]=useState(()=>{
+    return localStorage.getItem('theme')==='dark';
+  });
+
+  useEffect(()=>{
+    document.body.className=isDarkMode ? 'night-mode': 'day-mode';
+    localStorage.setItem('theme',isDarkMode ? 'dark' : 'light' )
+  },[isDarkMode]);
+
+  const toggleMode=()=>{
+    setDarkMode((prevMode)=>!prevMode);
+  }
+  
+  
   return (
     <>
      <nav className="navbar">
@@ -15,6 +30,7 @@ function App() {
             <li>About</li>
             <li>Contact Us</li>
             <li>Favorites</li>
+            <li><Link to='/FormInput'>FormInput</Link></li>
           </ul>
         </div>
         <div className="navbar-right">
@@ -22,6 +38,9 @@ function App() {
           <button className="btn">Cart</button>
           <button className="btn">Login</button>
           <button className="btn">Logout</button>
+          <button className="toggle-button" onClick={toggleMode}>
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
         </div>
       </nav>
       <div className="layout-container">

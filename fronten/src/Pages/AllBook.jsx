@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function AllBooks() {
+function AllBook() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -59,4 +59,4 @@ function AllBooks() {
   );
 }
 
-export default AllBooks;
+export default AllBook;
