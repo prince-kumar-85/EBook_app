@@ -71,7 +71,8 @@ function App() {
         </aside>
 
         <Routes>
-        <Route path="/" element={<Home query={query} />} />
+          {/* home page props */}
+        <Route path="/" element={<Home query={query} />} /> 
         <Route path="/allBook" element={<AllBook />} />
           <Route path="/FormInput" element={<FormInput />} />
         </Routes>
