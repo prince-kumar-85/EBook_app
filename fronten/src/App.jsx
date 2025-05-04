@@ -1,29 +1,36 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Pages/Home';
 import AllBook from './Pages/AllBook';
-import { useState,useEffect } from 'react'; 
 import FormInput from './Pages/FormInput';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function App() {
-  const [isDarkMode, setDarkMode]=useState(()=>{
-    return localStorage.getItem('theme')==='dark';
+  const [isDarkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark';
   });
 
-  useEffect(()=>{
-    document.body.className=isDarkMode ? 'night-mode': 'day-mode';
-    localStorage.setItem('theme',isDarkMode ? 'dark' : 'light' )
-  },[isDarkMode]);
+  useEffect(() => {
+    document.body.className = isDarkMode ? 'night-mode' : 'day-mode';
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
-  const toggleMode=()=>{
-    setDarkMode((prevMode)=>!prevMode);
-  }
+  const toggleMode = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
+
+  // Search state and handler
+  const [query, setQuery] = useState('');
   
-  
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log('Searching for:', query);
+    // Implement actual search logic or navigation
+  };
+
   return (
     <>
-     <nav className="navbar">
+      <nav className="navbar">
         <div className="navbar-left">
           <h2 className="logo">📚 BookStore</h2>
           <ul className="nav-links">
@@ -34,33 +41,42 @@ function App() {
           </ul>
         </div>
         <div className="navbar-right">
-          <input type="text" placeholder="Search..." className="search-bar" />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="search-bar"
+          />
+          <button onClick={handleSearch} className="btn">Search</button>
           <button className="btn">Cart</button>
           <button className="btn">Login</button>
           <button className="btn">Logout</button>
           <button className="toggle-button" onClick={toggleMode}>
-          {isDarkMode ? '☀️' : '🌙'}
-        </button>
+            {isDarkMode ? '☀️' : '🌙'}
+          </button>
         </div>
       </nav>
+
       <div className="layout-container">
-             
-              <aside className="sidebar">
-                <h3>Categories</h3>
-                <ul>
-                  <li><Link to="/allBook">All Books</Link></li>
-                  <li>About Account</li>
-                  <li>Add to Cart</li>
-                  <li>History</li>
-                  <li>Wish List</li>
-                </ul>
-              </aside>
-      <Routes>
-        <Route path="/" element={<Home />} />
+        <aside className="sidebar">
+          <h3>Categories</h3>
+          <ul>
+            <li><Link to="/allBook">All Books</Link></li>
+            <li>About Account</li>
+            <li>Add to Cart</li>
+            <li>History</li>
+            <li>Wish List</li>
+          </ul>
+        </aside>
+
+        <Routes>
+        <Route path="/" element={<Home query={query} />} />
         <Route path="/allBook" element={<AllBook />} />
-        <Route path="/FormInput" element={<FormInput />} />
-      </Routes>
+          <Route path="/FormInput" element={<FormInput />} />
+        </Routes>
       </div>
+
       <footer className="footer">
         <p>&copy; 2023 BookStore. All rights reserved.</p>
         <p>Follow us on social media!</p>
@@ -70,8 +86,7 @@ function App() {
           <li>Instagram</li>
           <li>LinkedIn</li>
         </ul>
-        </footer>
-     
+      </footer>
     </>
   );
 }
