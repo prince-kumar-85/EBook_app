@@ -19,7 +19,8 @@ function Home() {
     fetchBooks();
   }, []);
 
-  const downloadJson = (book) => {
+  const downloadJson = (book) => { /// Function to download book data as JSON
+    // Create a blob from the book data
     const blob = new Blob([JSON.stringify(book)], { type: "application/json" });
 
     const url = URL.createObjectURL(blob);
@@ -37,29 +38,20 @@ function Home() {
 
         <h2>Book List</h2>
         <ul className="book-list">
-          {/* <button onClick={downloadJson} className="download-button">Download JSON</button> */}
           {data.map((book) => (
             <li key={book._id} className="book-item">
               <h3>{book.title}</h3>
-              <p>
-                <strong>Author:</strong> {book.author}
-              </p>
+              
+              <p> <strong>Author:</strong> {book.author} </p>
 
-              <img
-                src={`http://localhost:5000/upload/images/${book.coverImage}`}
-                alt="Book Cover"
-                className="book-image"
-              />
+              <img src={`http://localhost:5000/upload/images/${book.coverImage}`} alt="Book Cover" className="book-image" />
 
-              <p>
-                <strong>Description:</strong> {book.description}
-              </p>
-              <p>
-                <strong>Language:</strong> {book.language}
-              </p>
-              <p>
-                <strong>Category:</strong> {book.category}
-              </p>
+              <p> <strong>Description:</strong> {book.description}</p>
+              
+              <p> <strong>Language:</strong> {book.language}</p>
+              
+              <p> <strong>Category:</strong> {book.category} </p>
+              
               <p>
                 <strong>Price:</strong> ₹{book.price}
               </p>
@@ -67,10 +59,7 @@ function Home() {
                 <strong>Rating:</strong> {book.rating}⭐
               </p>
 
-              <button
-                onClick={() => downloadJson(book)}
-                className="download-button"
-              >
+              <button onClick={() => downloadJson(book)} className="download-button">
                 Download JSON for "{book.title}"
               </button>
 
