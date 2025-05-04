@@ -26,7 +26,7 @@ function Home({ query }) {
     a.href = url;
     a.download = `${book.title.replace(/\s+/g, "_")}_data.json`;
     a.click();
-    URL.revokeObjectURL(url);
+    // URL.revokeObjectURL(url);
   };
 
   // 🔍 Separated filtering logic
