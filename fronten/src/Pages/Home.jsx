@@ -6,7 +6,7 @@ import "../Component/Home.css";
 function Home({ query }) {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
+  useEffect(() => { // Fetching book data from the server
     const fetchBooks = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/getbook");
@@ -19,7 +19,7 @@ function Home({ query }) {
     fetchBooks();
   }, []);
 
-  const downloadJson = (book) => {
+  const downloadJson = (book) => {// Function to download book data as JSON
     const blob = new Blob([JSON.stringify(book)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -30,7 +30,7 @@ function Home({ query }) {
   };
 
   // 🔍 Separated filtering logic
-  const filterBooks = (books, query) => {
+  const filterBooks = (books, query) => { // Function to filter books based on the search query
     const lowerQuery = (typeof query === 'string' ? query : "").toLowerCase();
     return books.filter((book) =>
       book.title.toLowerCase().includes(lowerQuery) ||
@@ -84,7 +84,7 @@ function Home({ query }) {
               </li>
             ))
           ) : (
-            <p>No books found.</p>
+            <p>No books found.</p> // No books found message
           )}
         </ul>
 
