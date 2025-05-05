@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import "../Component/FormInput.css"; // Assuming you have a CSS file for styling
 
 function FormInput() {
     const [title, setTitle] = useState("");
