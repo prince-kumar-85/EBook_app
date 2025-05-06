@@ -4,8 +4,10 @@ const path = require('path');
 require('dotenv').config(); // Load env variables
 
 const app = express();
-const userRouter = require('./router/router'); // Import the router
+const bookRouter = require('./router/router'); // Import the router
 const connectDB = require('./conn/conn'); // Import the DB connection
+const userRouter = require('./router/user'); // Import the user router
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -18,7 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/upload/images', express.static(path.join(__dirname, 'upload/images')));
 
 // Routes
-app.use('/api', userRouter);
+app.use('/api', bookRouter);
+
+app.use('/user',userRouter)
+
+
 
 // DB connection
 connectDB();
