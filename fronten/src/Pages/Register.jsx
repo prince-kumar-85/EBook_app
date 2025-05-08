@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {useState} from 'react'
-const axios= require('axios').default
+import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom'
-const navigate=useNavigate()
+
 
 
 
 
 function Register() {
+    const navigate=useNavigate()
     const[username, setUsername] = useState('')
     const[email,setEmail]=useState('')
     const[password,setPassword]=useState('')
@@ -31,7 +33,7 @@ function Register() {
          formdata.append("password",password)
 
          try{
-            const res=await axios.post("http://localhost:5000/user/register",formdata,{
+            const res=await axios.post("http://localhost:5000/user/signup",formdata,{
                 headers:{
                     "Content-Type":"multipart/form-data",
                 },
