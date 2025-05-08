@@ -4,6 +4,8 @@ import Home from './Pages/Home';
 import AllBook from './Pages/AllBook';
 import FormInput from './Pages/FormInput';
 import { useState, useEffect } from 'react';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
 
 function App() {
   const [isDarkMode, setDarkMode] = useState(() => {
@@ -50,8 +52,9 @@ function App() {
           />
           <button onClick={handleSearch} className="btn">Search</button>
           <button className="btn">Cart</button>
-          <button className="btn">Login</button>
+          <button className="btn"><Link to='/login'>Login</Link></button>
           <button className="btn">Logout</button>
+          <button className='btn'><Link to='/register'>Register</Link></button>
           <button className="toggle-button" onClick={toggleMode}>
             {isDarkMode ? '☀️' : '🌙'}
           </button>
@@ -75,6 +78,9 @@ function App() {
         <Route path="/" element={<Home query={query} />} /> 
         <Route path="/allBook" element={<AllBook />} />
           <Route path="/FormInput" element={<FormInput />} />
+          <Route path='/login' element={<Login/>}/>
+
+          <Route path='/register' element={<Register/>}/>
         </Routes>
       </div>
 
