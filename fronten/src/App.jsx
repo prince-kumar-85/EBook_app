@@ -6,6 +6,7 @@ import FormInput from './Pages/FormInput';
 import { useState, useEffect } from 'react';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import ProtectedRoute from './Component/ProtectedRoute'; // Import ProtectedRoute
 
 function App() {
   const [isDarkMode, setDarkMode] = useState(() => {
@@ -74,13 +75,35 @@ function App() {
         </aside>
 
         <Routes>
-          {/* home page props */}
-        <Route path="/" element={<Home query={query} />} /> 
-        <Route path="/allBook" element={<AllBook />} />
-          <Route path="/FormInput" element={<FormInput />} />
-          <Route path='/login' element={<Login/>}/>
-
-          <Route path='/register' element={<Register/>}/>
+          {/* Protected Routes */}
+          <Route 
+            path="/" 
+            element={
+              <ProtectedRoute>
+                <Home query={query} />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/allBook" 
+            element={
+              <ProtectedRoute>
+                <AllBook />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/FormInput" 
+            element={
+              <ProtectedRoute>
+                <FormInput />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
 
